@@ -1,0 +1,52 @@
+name: build
+
+on:
+  workflow_dispatch: {}
+  # push:
+  #  branches:
+  #    - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          submodules: true
+      - name: Setup Emscripten
+        uses: mymindstorm/setup-emsdk@v11
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+          cache: 'yarn'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies
+        run: yarn
+      - name: Install nextpnr dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential clang git libboost-all-dev libeigen3-dev libftdi-dev python3
+      - name: Build
+        run: ./build.sh
+      - name: Publish
+        run: ./publish.sh
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.YARN_TOKEN }}
+      - name: Commit and tag
+        uses: EndBug/add-and-commit@v7
+        with:
+          add: '.'
+          default_author: 'github_actions'
+          message: 'Release v${{ env.NEW_VERSION }}'
+          pull: 'NO-PULL'
+          push: true
+          tag: 'v${{ env.NEW_VERSION }}'
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: 'v${{ env.NEW_VERSION }}'
+          name: 'Yosys.js v${{ env.NEW_VERSION }}'
+          body: 'WebAssembly version of nextpnr https://github.com/YosysHQ/nextpnr/commit/${{ env.UPSTREAM_COMMIT }}.'
