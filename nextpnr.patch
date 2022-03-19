@@ -58,7 +58,7 @@
 +            ${Boost_SYSTEM_LIBRARY_CUSTOM}
 +            ${Boost_THREAD_LIBRARY_CUSTOM})
 +
-+        target_link_libraries(${target} LINK_PUBLIC "-s TOTAL_MEMORY=235536384 -s INITIAL_MEMORY=235536384 -s ALLOW_MEMORY_GROWTH=1 -s EXPORTED_RUNTIME_METHODS='[\"callMain\"]'")
++        target_link_libraries(${target} LINK_PUBLIC "-s TOTAL_MEMORY=240000000 -s INITIAL_MEMORY=240000000 -s ALLOW_MEMORY_GROWTH=1 -s EXPORTED_RUNTIME_METHODS='[\"callMain\"]'")
 +
          # Include family-specific source files to all family targets and set defines appropriately
          target_include_directories(${target} PRIVATE ${family}/ ${CMAKE_CURRENT_BINARY_DIR}/generated/)
