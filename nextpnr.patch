@@ -58,7 +58,7 @@
 +            ${Boost_SYSTEM_LIBRARY_CUSTOM}
 +            ${Boost_THREAD_LIBRARY_CUSTOM})
 +
-+        target_link_libraries(${target} LINK_PUBLIC "--memory-init-file 0 -s TOTAL_MEMORY=240058368 -s INITIAL_MEMORY=240058368 -s ALLOW_MEMORY_GROWTH=1 -s EXPORTED_RUNTIME_METHODS='[\"callMain\", \"FS\", \"IDBFS\", \"NODEFS\", \"PROXYFS\", \"WORKERFS\"]' -s MODULARIZE=1 -s EXPORT_NAME='Nextpnr'")
++        target_link_libraries(${target} LINK_PUBLIC "--memory-init-file 0 -s TOTAL_MEMORY=240058368 -s INITIAL_MEMORY=240058368 -s ALLOW_MEMORY_GROWTH=1 -s EXPORTED_RUNTIME_METHODS='[\"callMain\", \"FS\", \"IDBFS\", \"NODEFS\", \"PROXYFS\", \"WORKERFS\"]' -s MODULARIZE=1 -s EXPORT_NAME='Nextpnr' -lproxyfs.js")
 +
          # Include family-specific source files to all family targets and set defines appropriately
          target_include_directories(${target} PRIVATE ${family}/ ${CMAKE_CURRENT_BINARY_DIR}/generated/)
