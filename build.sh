@@ -44,7 +44,7 @@ cmake . -DARCH=ice40
 # Build nextpnr with Emscripten
 rm -rf CMakeCache.txt
 emcmake cmake . -DARCH=ice40 -DBBA_IMPORT=./bba-export.cmake -DICESTORM_INSTALL_PREFIX=/usr/local -DBoost_INCLUDE_DIRS=../boost
-make -j `nproc`
+emmake make -j `nproc`
 
 sed -i 's|var FS=|var FS=Module.FS=|' nextpnr*.js
 mv nextpnr*.js ../build
