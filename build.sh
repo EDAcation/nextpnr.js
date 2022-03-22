@@ -23,7 +23,11 @@ sed -i "s|toolset.flags gcc.archive .RANLIB \\\$(condition) : \\\$(ranlib\[1\])|
 # Collect Boost binaries
 mkdir -p bin.v2/wasm
 find bin.v2/libs -name '*.a' -exec cp -- "{}" bin.v2/wasm \;
-cd ..
+
+# Clean up Boost
+cd tools/build
+git checkout .
+cd ../../..
 
 # Build Project Icestorm
 cd icestorm
@@ -35,6 +39,7 @@ cd ..
 patch -p0 -f < nextpnr.patch
 
 # Configure nextpnr
+echo "Building nextpnr natively..."
 cd nextpnr
 ARCHITECTURES=ice40
 cmake . -DARCH=$ARCHITECTURES
@@ -43,6 +48,7 @@ cmake . -DARCH=$ARCHITECTURES
 (make -j `nproc` || true)
 
 # Configure nextpnr with Emscripten
+echo "Building nextpnr with Emscripten..."
 rm -rf CMakeCache.txt
 emcmake cmake . -DARCH=$ARCHITECTURES -DBBA_IMPORT=./bba-export.cmake -DICESTORM_INSTALL_PREFIX=/usr/local -DBoost_INCLUDE_DIRS=../boost
 
