@@ -36,9 +36,17 @@ patch -p0 -f < nextpnr.patch
 
 # Configure nextpnr
 cd nextpnr
-emcmake cmake . -DARCH=ice40 -DBBA_IMPORT=./bba-export.cmake -DICESTORM_INSTALL_PREFIX=/usr/local -DBoost_INCLUDE_DIRS=../boost
+ARCHITECTURES=ice40
+cmake . -DARCH=ARCHITECTURES
 
 # Build nextpnr
+(make -j `nproc` || true)
+
+# Configure nextpnr with Emscripten
+rm -rf CMakeCache.txt
+emcmake cmake . -DARCH=ARCHITECTURES -DBBA_IMPORT=./bba-export.cmake -DICESTORM_INSTALL_PREFIX=/usr/local -DBoost_INCLUDE_DIRS=../boost
+
+# Build nextpnr with Emscripten
 emmake make -j `nproc`
 
 sed -i 's|var FS=|var FS=Module.FS=|' nextpnr*.js
