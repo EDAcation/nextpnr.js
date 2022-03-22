@@ -48,5 +48,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: 'v${{ env.NEW_VERSION }}'
-          name: 'Yosys.js v${{ env.NEW_VERSION }}'
+          name: 'nextpnr.js v${{ env.NEW_VERSION }}'
           body: 'WebAssembly version of nextpnr https://github.com/YosysHQ/nextpnr/commit/${{ env.UPSTREAM_COMMIT }}.'
