@@ -37,6 +37,7 @@ cd ..
 
 # Apply patches
 patch -p0 -f < nextpnr.patch
+patch -p0 -f < nextpnr-ice40.patch
 
 # Configure nextpnr
 echo "Building nextpnr natively..."
@@ -65,6 +66,7 @@ cd ..
 
 # Undo patches
 patch -p0 -f -R < nextpnr.patch
+patch -p0 -f -R < nextpnr-ice40.patch
 
 # Build npm package
 yarn run build
