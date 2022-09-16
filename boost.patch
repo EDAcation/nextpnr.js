@@ -1,0 +1,14 @@
+--- boost/libs/mpl/include/boost/mpl/aux_/integral_wrapper.hpp	2022-09-16 13:17:52.670599717 +0000
++++ boost/libs/mpl/include/boost/mpl/aux_/integral_wrapper.hpp	2022-09-16 13:17:36.293700133 +0000
+@@ -69,8 +69,11 @@
+     typedef AUX_WRAPPER_INST( BOOST_MPL_AUX_STATIC_CAST(AUX_WRAPPER_VALUE_TYPE, (N + 1)) ) next;
+     typedef AUX_WRAPPER_INST( BOOST_MPL_AUX_STATIC_CAST(AUX_WRAPPER_VALUE_TYPE, (N - 1)) ) prior;
+ #else
++    #pragma GCC diagnostic push
++    #pragma GCC diagnostic ignored "-Wenum-constexpr-conversion"
+     typedef AUX_WRAPPER_INST( BOOST_MPL_AUX_STATIC_CAST(AUX_WRAPPER_VALUE_TYPE, (value + 1)) ) next;
+     typedef AUX_WRAPPER_INST( BOOST_MPL_AUX_STATIC_CAST(AUX_WRAPPER_VALUE_TYPE, (value - 1)) ) prior;
++    #pragma GCC diagnostic pop
+ #endif
+
+     // enables uniform function call syntax for families of overloaded

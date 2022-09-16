@@ -8,6 +8,9 @@ git submodule update --init --recursive
 rm -rf build
 mkdir -p build
 
+# Apply Boost patches
+patch -p0 -f < boost.patch
+
 # Configure Boost
 cd boost
 ./bootstrap.sh
@@ -28,6 +31,9 @@ find bin.v2/libs -name '*.a' -exec cp -- "{}" bin.v2/wasm \;
 cd tools/build
 git checkout .
 cd ../../..
+
+# Undo Boost patches
+patch -p0 -f -R < boost.patch
 
 # Build Project Icestorm
 cd icestorm
