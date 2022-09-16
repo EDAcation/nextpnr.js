@@ -32,9 +32,6 @@ cd tools/build
 git checkout .
 cd ../../..
 
-# Undo Boost patches
-patch -p0 -f -R < boost.patch
-
 # Build Project Icestorm
 cd icestorm
 make -j `nproc`
@@ -71,6 +68,7 @@ make clean
 cd ..
 
 # Undo patches
+patch -p0 -f -R < boost.patch
 patch -p0 -f -R < nextpnr.patch
 patch -p0 -f -R < nextpnr-ice40.patch
 
