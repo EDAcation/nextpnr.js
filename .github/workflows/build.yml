@@ -29,7 +29,7 @@ jobs:
       - name: Install nextpnr dependencies
         run: |
           sudo apt update
-          sudo apt install -y build-essential clang cmake git libboost-all-dev libeigen3-dev libftdi-dev python3
+          sudo apt install -y build-essential clang cmake git libboost-all-dev libeigen3-dev libftdi-dev openocd python3
       - name: Build
         run: ./build.sh
       - name: Publish

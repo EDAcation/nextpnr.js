@@ -1,9 +1,12 @@
+[submodule "boost"]
+	path = boost
+	url = https://github.com/boostorg/boost
 [submodule "nextpnr"]
 	path = nextpnr
 	url = https://github.com/YosysHQ/nextpnr
 [submodule "icestorm"]
 	path = icestorm
 	url = https://github.com/YosysHQ/icestorm
-[submodule "boost"]
-	path = boost
-	url = https://github.com/boostorg/boost
+[submodule "trellis"]
+	path = trellis
+	url = https://github.com/YosysHQ/prjtrellis

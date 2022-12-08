@@ -38,6 +38,13 @@ make -j `nproc`
 sudo make install
 cd ..
 
+# Build Project Trellis
+cd trellis/libtrellis
+cmake
+make -j `nproc`
+sudo make install
+cd ..
+
 # Apply patches
 patch -p0 -f < nextpnr.patch
 patch -p0 -f < nextpnr-ice40.patch
@@ -45,7 +52,7 @@ patch -p0 -f < nextpnr-ice40.patch
 # Configure nextpnr
 echo "Building nextpnr natively..."
 cd nextpnr
-ARCHITECTURES=ice40
+ARCHITECTURES=ice40 ecp5
 cmake . -DARCH=$ARCHITECTURES
 
 # Build nextpnr
@@ -54,7 +61,7 @@ cmake . -DARCH=$ARCHITECTURES
 # Configure nextpnr with Emscripten
 echo "Building nextpnr with Emscripten..."
 rm -rf CMakeCache.txt
-emcmake cmake . -DARCH=$ARCHITECTURES -DBBA_IMPORT=./bba-export.cmake -DICESTORM_INSTALL_PREFIX=/usr/local -DBoost_INCLUDE_DIRS=../boost
+emcmake cmake . -DARCH=$ARCHITECTURES -DBBA_IMPORT=./bba-export.cmake -DBoost_INCLUDE_DIRS=../boost -DICESTORM_INSTALL_PREFIX=/usr/local -DTRELLIS_INSTALL_PREFIX=/usr/local
 
 # Build nextpnr with Emscripten
 emmake make -j `nproc`
