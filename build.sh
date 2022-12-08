@@ -58,14 +58,23 @@ cmake . -DARCH=$ARCHITECTURES
 # Build nextpnr
 (make -j `nproc` || true)
 
-# Configure nextpnr with Emscripten
-echo "Building nextpnr with Emscripten..."
+# Configure nextpnr-ice40 with Emscripten
+echo "Building nextpnr-ice40 with Emscripten..."
 rm -rf CMakeCache.txt
-emcmake cmake . -DARCH=$ARCHITECTURES -DBBA_IMPORT=./bba-export.cmake -DBoost_INCLUDE_DIRS=../boost -DICESTORM_INSTALL_PREFIX=/usr/local -DTRELLIS_INSTALL_PREFIX=/usr/local -DTRELLIS_LIBDIR=/usr/local/lib/trellis
+emcmake cmake . -DARCH=ice40 -DBBA_IMPORT=./bba-export.cmake -DBoost_INCLUDE_DIRS=../boost -DICESTORM_INSTALL_PREFIX=/usr/local
 
-# Build nextpnr with Emscripten
+# Build nextpnr-ice40 with Emscripten
 emmake make -j `nproc`
 
+# Configure nextpnr-ecp5 with Emscripten
+echo "Building nextpnr-ecp5 with Emscripten..."
+rm -rf CMakeCache.txt
+emcmake cmake . -DARCH=ecp5 -DBBA_IMPORT=./bba-export.cmake -DBoost_INCLUDE_DIRS=../boost -DTRELLIS_INSTALL_PREFIX=/usr/local -DTRELLIS_LIBDIR=/usr/local/lib/trellis
+
+# Build nextpnr-ecp5 with Emscripten
+emmake make -j `nproc`
+
+# Patch Emscripten build output
 sed -i 's|var FS=|var FS=Module.FS=|' nextpnr*.js
 mv nextpnr*.js ../build
 cp nextpnr*.wasm ../build
