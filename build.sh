@@ -52,7 +52,7 @@ patch -p0 -f < nextpnr-ice40.patch
 # Configure nextpnr
 echo "Building nextpnr natively..."
 cd nextpnr
-ARCHITECTURES=ice40 ecp5
+ARCHITECTURES="ice40 ecp5"
 cmake . -DARCH=$ARCHITECTURES
 
 # Build nextpnr
