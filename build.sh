@@ -49,13 +49,15 @@ cd ../..
 patch -p0 -f < nextpnr.patch
 patch -p0 -f < nextpnr-ice40.patch
 
-# Configure nextpnr
-echo "Building nextpnr natively..."
 cd nextpnr
-ARCHITECTURES="ice40 ecp5"
-cmake . -DARCH=$ARCHITECTURES
 
-# Build nextpnr
+### Start of nextpnr-ice40
+
+# Configure nextpnr-ice40 natively
+echo "Building nextpnr-ice40 natively..."
+cmake . -DARCH=ice40
+
+# Build nextpnr-ice40 natively
 (make -j `nproc` || true)
 
 # Configure nextpnr-ice40 with Emscripten
@@ -66,6 +68,17 @@ emcmake cmake . -DARCH=ice40 -DBBA_IMPORT=./bba-export.cmake -DBoost_INCLUDE_DIR
 # Build nextpnr-ice40 with Emscripten
 emmake make -j `nproc`
 
+### End of nextpnr-ice40
+
+### Start of nextpnr-ecp5
+
+# Configure nextpnr-ecp5 natively
+echo "Building nextpnr-ecp5 natively..."
+cmake . -DARCH=ecp5
+
+# Build nextpnr-ecp5 natively
+(make -j `nproc` || true)
+
 # Configure nextpnr-ecp5 with Emscripten
 echo "Building nextpnr-ecp5 with Emscripten..."
 rm -rf CMakeCache.txt
@@ -73,6 +86,8 @@ emcmake cmake . -DARCH=ecp5 -DBBA_IMPORT=./bba-export.cmake -DBoost_INCLUDE_DIRS
 
 # Build nextpnr-ecp5 with Emscripten
 emmake make -j `nproc`
+
+### End of nextpnr-ecp5
 
 # Patch Emscripten build output
 sed -i 's|var FS=|var FS=Module.FS=|' nextpnr*.js
