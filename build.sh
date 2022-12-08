@@ -61,7 +61,7 @@ cmake . -DARCH=$ARCHITECTURES
 # Configure nextpnr with Emscripten
 echo "Building nextpnr with Emscripten..."
 rm -rf CMakeCache.txt
-emcmake cmake . -DARCH=$ARCHITECTURES -DBBA_IMPORT=./bba-export.cmake -DBoost_INCLUDE_DIRS=../boost -DICESTORM_INSTALL_PREFIX=/usr/local -DTRELLIS_INSTALL_PREFIX=/usr/local
+emcmake cmake . -DARCH=$ARCHITECTURES -DBBA_IMPORT=./bba-export.cmake -DBoost_INCLUDE_DIRS=../boost -DICESTORM_INSTALL_PREFIX=/usr/local -DTRELLIS_INSTALL_PREFIX=/usr/local -DTRELLIS_LIBDIR=/usr/local/lib/trellis
 
 # Build nextpnr with Emscripten
 emmake make -j `nproc`
