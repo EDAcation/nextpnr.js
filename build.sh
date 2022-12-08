@@ -55,6 +55,7 @@ cd nextpnr
 
 # Configure nextpnr-ice40 natively
 echo "Building nextpnr-ice40 natively..."
+rm -rf CMakeCache.txt
 cmake . -DARCH=ice40
 
 # Build nextpnr-ice40 natively
@@ -74,6 +75,7 @@ emmake make -j `nproc`
 
 # Configure nextpnr-ecp5 natively
 echo "Building nextpnr-ecp5 natively..."
+rm -rf CMakeCache.txt
 cmake . -DARCH=ecp5
 
 # Build nextpnr-ecp5 natively
