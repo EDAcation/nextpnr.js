@@ -1,7 +1,7 @@
 {
     "name": "nextpnr",
     "description": "WebAssembly version of nextpnr.",
-    "version": "0.4.10",
+    "version": "0.4.11",
     "license": "MIT",
     "contributors": [
         "Daniel Huisman <daniel@huisman.me> (https://danielhuisman.io)"
