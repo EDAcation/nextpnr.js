@@ -43,7 +43,7 @@ cd trellis/libtrellis
 cmake .
 make -j `nproc`
 sudo make install
-cd ..
+cd ../..
 
 # Apply patches
 patch -p0 -f < nextpnr.patch
