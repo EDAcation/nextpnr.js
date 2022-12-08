@@ -40,7 +40,7 @@ cd ..
 
 # Build Project Trellis
 cd trellis/libtrellis
-cmake
+cmake .
 make -j `nproc`
 sudo make install
 cd ..
