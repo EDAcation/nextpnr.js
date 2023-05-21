@@ -4,7 +4,8 @@ import path from 'path';
 /* eslint-disable @typescript-eslint/no-var-requires */
 const packageJson = require('../package.json');
 
-const InitNextpnr: EmscriptenModuleFactory<NextpnrModule> = require('./nextpnr-ice40.js');
+const InitNextpnrEcp5: EmscriptenModuleFactory<NextpnrModule> = require('./nextpnr-ecp5.js');
+const InitNextpnrIce40: EmscriptenModuleFactory<NextpnrModule> = require('./nextpnr-ice40.js');
 /* eslint-enable @typescript-eslint/no-var-requires */
 
 export type EmscriptenFS = typeof FS;
@@ -13,15 +14,26 @@ export interface NextpnrModule extends EmscriptenModule {
     FS: EmscriptenFS;
 }
 
+export type NextpnrArchitecture = 'ecp5' | 'ice40';
+
+const initByArchitecture: Record<NextpnrArchitecture, EmscriptenModuleFactory<NextpnrModule>> = {
+    'ecp5': InitNextpnrEcp5,
+    'ice40': InitNextpnrIce40
+}
+
 export class Nextpnr {
 
     static getVersion() {
         return packageJson.version;
     }
 
-    static async initialize({wasmBinary, ...args}: Parameters<EmscriptenModuleFactory>[0] = {}) {
+    static async initialize({architecture, wasmBinary, ...args}: Parameters<EmscriptenModuleFactory>[0] & {architecture: NextpnrArchitecture} = {
+        architecture: 'ice40'
+    }) {
+        const InitNextpnr = initByArchitecture[architecture];
+
         return new Nextpnr(await InitNextpnr({
-            wasmBinary: wasmBinary ? wasmBinary : fs.readFileSync(path.join(__dirname, 'nextpnr-ice40.wasm')),
+            wasmBinary: wasmBinary ? wasmBinary : fs.readFileSync(path.join(__dirname, `nextpnr-${architecture}.wasm`)),
             ...args
         }));
     }
@@ -39,5 +51,4 @@ export class Nextpnr {
     getFS() {
         return this.module.FS;
     }
-
 }
