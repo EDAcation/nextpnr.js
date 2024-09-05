@@ -1,3 +1,7 @@
+> [!IMPORTANT]
+> Nextpnr.js has been deprecated and is no longer being updated.
+> We suggest using an alternative solution such as [YoWASP](https://yowasp.org/) instead.
+
 # nextpnr.js
 
 WebAssembly version of [nextpnr](https://github.com/YosysHQ/nextpnr). Automatic updates through a GitHub Actions workflow.
